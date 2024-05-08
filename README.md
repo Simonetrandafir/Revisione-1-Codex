@@ -7,6 +7,8 @@ Per una documentazione dettagliata sulla lista delle API, consulta nella directo
 
 ## Descrizione del Progetto
 
+***Nome Database Locale:*** codexFinal
+
 Codex è un'applicazione backend Laravel che fornisce API RESTfull per la gestione di un ipotetico sito di streaming video online.
 Il codice gestisce tutte le chiamate alle API necessarie per gestire le seguenti tabelle:
 - tipo_indirizzi,
