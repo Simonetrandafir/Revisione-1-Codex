@@ -22,8 +22,8 @@ class StatiResource extends JsonResource
     protected function getStati()
     {
         return [
-            "ID"=> $this->idStato,
-            "Stato"=> $this->stato,
+            "idStato"=> $this->idStato,
+            "stato"=> $this->stato,
         ];
     }
 }

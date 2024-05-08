@@ -20,18 +20,18 @@ class ComuniItalianiResource extends JsonResource
         //---------------------PROTECTED---------------------------------------
         protected function showComuniItaliani(){
             return [
-                'ID'=>$this->idComuneItalia,
-                'Comune'=>$this->nome,
-                'Regione'=>$this->regione,
-                'Metropolitana'=>$this->metropolitana,
-                'Provincia'=>$this->provincia,
-                'Sigla Automobilistica'=>$this->siglaAuto,
-                'Codice Catastale'=>$this->codCatastale,
-                'Capoluogo'=>$this->capoluogo,
-                'MultiCap'=>$this->multiCap,
-                'CAP'=>$this->cap,
-                'CAP Inizio'=>$this->capInizio,
-                'CAP Fine'=>$this->capFine,
+                'idComuneItalia'=>$this->idComuneItalia,
+                'nome'=>$this->nome,
+                'regione'=>$this->regione,
+                'metropolitana'=>$this->metropolitana,
+                'provincia'=>$this->provincia,
+                'siglaAuto'=>$this->siglaAuto,
+                'codCatastale'=>$this->codCatastale,
+                'capoluogo'=>$this->capoluogo,
+                'multiCap'=>$this->multiCap,
+                'cap'=>$this->cap,
+                'capInizio'=>$this->capInizio,
+                'capFine'=>$this->capFine,
 
             ];
         }

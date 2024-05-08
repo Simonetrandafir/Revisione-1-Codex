@@ -23,8 +23,8 @@ class RuoliResource extends JsonResource
     protected function getRuolo()
     {
         return [
-            "ID"=> $this->idRuolo,
-            "Ruolo"=> $this->ruolo,
+            "idRuolo"=> $this->idRuolo,
+            "ruolo"=> $this->ruolo,
         ];
     }
 }

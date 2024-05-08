@@ -22,8 +22,8 @@ class CategorieCollection extends ResourceCollection
     //---------------------PROTECTED--------------------------------------------------
     protected function getCampi($item) {
         return [
-            'ID' => $item["idCategoria"],
-            'Categoria' => $item["nome"]
+            'id' => $item["idCategoria"],
+            'categoria' => $item["nome"]
         ];
     }
 }

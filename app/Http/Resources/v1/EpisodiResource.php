@@ -21,14 +21,14 @@ class EpisodiResource extends JsonResource
     protected function getEpisodi()
     {
         return [
-            'ID' => $this->idEpisodio,
-            'Serie Tv' => $this->idSerieTv,
-            'Titolo' => $this->titolo,
-            'Trama' => $this->trama,
-            'Stagione' => $this->stagione,
-            'Episodio' => $this->episodio,
-            'Durata' => $this->durata,
-            'Anno di Uscita' => $this->anno,
+            'idEpisodio' => $this->idEpisodio,
+            'idSerieTv' => $this->idSerieTv,
+            'titolo' => $this->titolo,
+            'trama' => $this->trama,
+            'stagione' => $this->stagione,
+            'episodio' => $this->episodio,
+            'durata' => $this->durata,
+            'anno' => $this->anno,
         ];
     }
 }

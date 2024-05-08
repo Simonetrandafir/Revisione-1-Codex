@@ -22,17 +22,17 @@ class SerieTvResource extends JsonResource
     protected function getSerieTv()
     {
         return [
-            'ID' => $this->idSerieTv,
-            'Categoria' => $this->idCategoria,
-            'Genere' => $this->idGenere,
-            'Titolo' => $this->titolo,
-            'Trama' => $this->trama,
-            'Stagioni' => $this->totStagioni,
-            'Episodi' => $this->nEpisodi,
-            'Regista' => $this->regista,
-            'Attori' => $this->attori,
-            'Anno di Uscita' => $this->annoInizio,
-            'Anno di Fine' => $this->annoFine,
+            'idSerieTv' => $this->idSerieTv,
+            'idCategoria' => $this->idCategoria,
+            'idGenere' => $this->idGenere,
+            'titolo' => $this->titolo,
+            'trama' => $this->trama,
+            'totStagioni' => $this->totStagioni,
+            'nEpisodi' => $this->nEpisodi,
+            'regista' => $this->regista,
+            'attori' => $this->attori,
+            'annoInizio' => $this->annoInizio,
+            'annoFine' => $this->annoFine,
         ];
     }
 }

@@ -20,8 +20,8 @@ class CategorieResource extends JsonResource
         //---------------------PROTECTED---------------------------------------
         protected function showCategoria(){
             return [
-                'ID'=>$this->idCategoria,
-                'Categoria'=>$this->nome,
+                'id'=>$this->idCategoria,
+                'categoria'=>$this->nome,
             ];
         }
 }

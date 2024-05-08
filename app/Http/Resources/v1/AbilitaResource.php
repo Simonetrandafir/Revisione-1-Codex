@@ -22,7 +22,7 @@ class AbilitaResource extends JsonResource
     protected function getRuolo()
     {
         return [
-            "ID"=> $this->idAbilita,
+            "id"=> $this->idAbilita,
             "nome"=> $this->nome,
             "sku"=> $this->sku,
         ];

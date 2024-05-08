@@ -20,9 +20,9 @@ class CreditiResource extends JsonResource
         //---------------------PROTECTED---------------------------------------
         protected function showResource(){
             return [
-                'ID'=>$this->idCredito,
-                'Contatto'=>$this->idContatto,
-                'Credito'=>$this->credito,
+                'idCredito'=>$this->idCredito,
+                'idContatto'=>$this->idContatto,
+                'credito'=>$this->credito,
             ];
         }
 }
