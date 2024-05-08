@@ -3,7 +3,7 @@
 ## Documentazione
 
 Per una documentazione dettagliata sulla lista delle API, consulta nella directory del repository il file: `ListaApi.md`
-- [Lista API di Codex](ListaApi.md).
+- [Lista API di Codex](lista-api.md).
 
 ## Descrizione del Progetto
 
