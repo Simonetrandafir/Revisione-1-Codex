@@ -23,8 +23,8 @@ class RegistraController extends Controller
     protected static function aggiungiContatto($data){
         $contatto = RegistraController::nuovoContatto($data);
         $auth = RegistraController::nuovoAuth($data,$contatto->idContatto);
-        $psw = RegistraController::nuovaPsw($data,$contatto->idContatto);
-        $indirizzo= RegistraController::nuovoIndirizzo($data,$contatto->idContatto);
+        RegistraController::nuovaPsw($data,$contatto->idContatto);
+        RegistraController::nuovoIndirizzo($data,$contatto->idContatto);
         RegistraController::nuovoRuolo($contatto->idContatto, $auth->idAuth);
         RegistraController::crediti($contatto->idContatto);
         return $contatto;
@@ -77,7 +77,7 @@ class RegistraController extends Controller
             'cap'=>$comune->cap,
             'indirizzo'=>$data['indirizzo'],
             'civico'=>$data['civico'],
-            'citta'=>'',
+            'citta'=>$comune->nome,
         ]);
     }
     
@@ -90,7 +90,7 @@ class RegistraController extends Controller
     protected static function crediti($idContatto){
         return Crediti::create([
             'idContatto'=> $idContatto,
-            'crediti'=> 0,
+            'crediti'=> 100,
         ]);
     }
 

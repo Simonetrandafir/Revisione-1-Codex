@@ -32,12 +32,11 @@ class RegistraRequest extends FormRequest
             'indirizzo' => 'required|string|max:255',
             'civico' => 'required|string|max:255',
             'cittadinanza' => 'required|string|max:255',
-            'codFiscale' => 'nullable|string|max:255',
+            'codFiscale' => 'required|string|max:255',
             'username' => 'required|string|max:255',
             'email' => 'required|string|max:255',
             'psw' => 'required|string|min:8',
-            'pswConfirm' => 'required|string|min:8',
-            'preferito' => 'nullable|boolean',
+            'preferito' => 'in:0,1',
             'checkDati' => 'required|boolean',
         ];
     }
