@@ -14,7 +14,8 @@ class VistaProvinceController extends Controller
         $query = DB::table('vista_province');
         if($query!==null){
             $province = $query->get();
-            return response()->json($province);
+            $data=['data'=>$province];
+            return response()->json($data);
         }else{
             abort(404,'VP-I');
         }
@@ -24,7 +25,9 @@ class VistaProvinceController extends Controller
     public function show($provincia){
         $risorsa = $this->trovaID($provincia);
         if($risorsa!==null){
-            return $risorsa;
+            $data=['data'=>$risorsa];
+            return response()->json($data);
+
         }else{
             abort(404, "VP-S");
         }
