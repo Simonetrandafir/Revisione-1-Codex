@@ -50,7 +50,7 @@ class ContattiController extends Controller
     {
         
         if (Gate::allows('leggere')) {
-            $contatto = $this->trovaIdDatabase($idContatto,'Contatti');
+            $contatto = $this->trovaIdDatabase($idContatto);
             if (Gate::allows('admin')) {
                 return $this->creaRisorsa($contatto);
             } else {
@@ -62,7 +62,7 @@ class ContattiController extends Controller
                     //controllo che l'idContatto corrisponda all'id nel token
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
-                        return new ContattiResource($contatto);
+                        return new ContattiCompletaResource($contatto);
                     }else{
                         abort(403,'TKM_0000');
                     }
@@ -81,7 +81,7 @@ class ContattiController extends Controller
         
         if (Gate::allows('aggiornare')) {
             $data = $request->validated();
-            $contatto = $this->trovaIdDatabase($idContatto,'Contatti');
+            $contatto = $this->trovaIdDatabase($idContatto);
             if (Gate::allows('admin')){
                 $contatto->fill($data);
                 $contatto->save();
@@ -113,7 +113,7 @@ class ContattiController extends Controller
     public function destroy($idContatto)
     {
         if (Gate::allows('eliminare')) {
-            $contatto = $this->trovaIdDatabase($idContatto,'Contatti');
+            $contatto = $this->trovaIdDatabase($idContatto);
             $contatto->deleteOrFail();
             $this->aggiornaIdTabella('contatti','idContatto','Contatti');
 
@@ -183,8 +183,8 @@ class ContattiController extends Controller
      * @param string $id
      * @param string $model
      */
-    protected static function trovaIdDatabase($id,$model){
-        $risorsa = $model::findOrFail($id);
+    protected static function trovaIdDatabase($id){
+        $risorsa = Contatti::findOrFail($id);
         if ($risorsa !== null){
             return $risorsa;
         }else{

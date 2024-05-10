@@ -67,7 +67,6 @@ class Contatti extends Authenticatable
      *
      * @param integer $idContattoAuth
      * @param string|array $idRuoli
-     * @return Collection
      */
     public static function sincronizzaContattoRuoli($idAuth, $idRuoli)
     {

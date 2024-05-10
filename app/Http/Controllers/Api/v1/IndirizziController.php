@@ -72,7 +72,7 @@ class IndirizziController extends Controller
         if (Gate::allows('leggere')) {
             $data = $this->trovaIdDatabase($idContatto);
             if (Gate::allows('admin')) {
-                return new IndirizziCollection($data);
+                return new IndirizziResource($data);
             } else {
                 //se la richiesta viene dall'utente prendo token
                 $token = $request->bearerToken();
@@ -82,7 +82,7 @@ class IndirizziController extends Controller
                     //controllo che l'idContatto corrisponda all'id nel token
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
-                        return new IndirizziCollection($data);
+                        return new IndirizziResource($data);
                     }else{
                         abort(403,'TKINC_0000');
                     }
@@ -187,7 +187,7 @@ class IndirizziController extends Controller
      * @param string $id
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Indirizzi::findOrFail($id);
+        $risorsa = Indirizzi::where('idContatto',$id)->firstOrFail();
         if ($risorsa !== null){
             return $risorsa;
         }else{

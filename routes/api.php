@@ -1,6 +1,5 @@
 <?php
 
-use App\Helpers\AppHelpers;
 use App\Http\Controllers\Api\v1\AbilitaController;
 use App\Http\Controllers\Api\v1\AccediController;
 use App\Http\Controllers\Api\v1\CalcoloIva;
@@ -135,7 +134,7 @@ Route::get(VERSIONE . '/abilita/{idAbilita}',[AbilitaController::class, 'show'])
 // --------------------------------------- STATI --------------------------------testde
 Route::get(VERSIONE . '/stati', [StatiController::class,'index']);
 Route::get(VERSIONE . '/stati/{idStato}', [StatiController::class,'show']);
-//---------------------------------- VISTA PROVINCE -------------------------
+//---------------------------------- VISTA PROVINCE -------------------------tested
 Route::get(VERSIONE . '/province',[VistaProvinceController::class,'index']);
 Route::get(VERSIONE . '/province/{provincia}',[VistaProvinceController::class,'show']);
 
@@ -163,11 +162,6 @@ Route::middleware(["autenticazione", "ruoli:admin,utente"])->group(function(){
     // ------------------------- CONTATTO ---------------------------------------------tested
     Route::get(VERSIONE . CONTATTO_ID, [ContattiController::class,'show']);
     Route::put(VERSIONE . AGGIORNA . CONTATTO_ID, [ContattiController::class,'update']);
-    
-    //--------------------------- PASSWORDS ---------------------------------------------
-    Route::get(VERSIONE . '/passwords/{idContatto}',[PasswordController::class,'show']);
-    Route::post(VERSIONE .SALVA .'/passwords/{idContatto}',[PasswordController::class,'aggiungiPassword']);
-    Route::put(VERSIONE . AGGIORNA . '/passwords/{idContatto}/{idPassword}',[PasswordController::class,'update']);
 
     // ------------------------- FILM -------------------------------------tested
     Route::get(VERSIONE . '/films', [FilmController::class,'index']);
@@ -188,23 +182,27 @@ Route::middleware(["autenticazione", "ruoli:admin,utente"])->group(function(){
     Route::get(VERSIONE . '/serieTv/{idSerieTv}/episodi', [EpisodiController::class,'episodiSerieTv']);
 
     // -------------------------- CREDITI ---------------------------------------
-    Route::get(VERSIONE . '/crediti/{idCredito}', [CreditiController::class,'show']);
-    Route::put(VERSIONE . AGGIORNA .'/crediti/{idCredito}', [CreditiController::class,'update']);
+    Route::get(VERSIONE . '/crediti/{idContatto}', [CreditiController::class,'show']);
+    Route::put(VERSIONE . AGGIORNA .'/crediti/{idContatto}', [CreditiController::class,'update']);
 
     // -------------------------- FILES ---------------------------------------------------------
     Route::get(VERSIONE .'/files/{idFile}',[FilesController::class,'show']);
 
     //------------------------------- INDIRIZZI ----------------------------------------
-    Route::get(VERSIONE . '/indirzzi/{idContatto}',[IndirizziController::class,'show']);
-    Route::post(VERSIONE .SALVA. '/indirzzi/{idContatto}',[IndirizziController::class,'aggiungiIndirizzo']);
-    Route::put(VERSIONE .AGGIORNA. '/indirzzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'update']);
-    Route::delete(VERSIONE .DISTRUGGI. '/indirzzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'destroy']);
+    Route::get(VERSIONE . '/indirizzi/{idContatto}',[IndirizziController::class,'show']);
+    Route::post(VERSIONE .SALVA. '/indirizzi/{idContatto}',[IndirizziController::class,'aggiungiIndirizzo']);
+    Route::put(VERSIONE .AGGIORNA. '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'update']);
+    Route::delete(VERSIONE .DISTRUGGI. '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'destroy']);
     //------------------------------- RECAPITI ----------------------------------------
     Route::get(VERSIONE . '/recapiti/{idContatto}',[RecapitiController::class,'show']);
     Route::post(VERSIONE .SALVA. '/recapiti/{idContatto}',[RecapitiController::class,'aggiungiRecapito']);
     Route::put(VERSIONE .AGGIORNA. '/recapiti/{idContatto}/{idRecapito}',[RecapitiController::class,'update']);
     Route::delete(VERSIONE .DISTRUGGI. '/recapiti/{idContatto}/{idRecapito}',[RecapitiController::class,'destroy']);
-
+    
+    //--------------------------- PASSWORDS ---------------------------------------------
+    Route::get(VERSIONE . '/passwords/{idContatto}',[PasswordController::class,'show']);
+    Route::post(VERSIONE .SALVA .'/passwords/{idContatto}',[PasswordController::class,'aggiungiPassword']);
+    Route::put(VERSIONE . AGGIORNA . '/passwords/{idContatto}/{idPassword}',[PasswordController::class,'update']);
 });
 
 //?#################################################################################################################

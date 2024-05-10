@@ -36,6 +36,6 @@ class Password extends Model
      */
     public function passwordContatti(){
         return $this->hasMany(Contatti::class,'idContatto', 'idContatto')
-        ->orderBy("idContattoPassword", "desc")->firstOrFail();
+        ->orderBy("idContatto", "desc")->firstOrFail();
     }
 }

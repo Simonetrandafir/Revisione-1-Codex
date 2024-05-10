@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('passwords', function (Blueprint $table) {
             $table->id('idPassword');
-            $table->unsignedBigInteger('idContatto');
+            $table->unsignedBigInteger('idContatto')->index();
             $table->string('psw',255);
             $table->string('sale',255);
 

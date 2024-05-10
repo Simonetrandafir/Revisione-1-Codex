@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contatti_auths', function (Blueprint $table) {
             $table->id('idAuth');
-            $table->unsignedBigInteger('idContatto');
+            $table->unsignedBigInteger('idContatto')->index();
             $table->string('username',255)->unique();
             $table->string('email',250)->unique();
             $table->string('sfida',255)->nullable();
