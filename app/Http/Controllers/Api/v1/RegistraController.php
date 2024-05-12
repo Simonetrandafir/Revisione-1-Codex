@@ -17,7 +17,16 @@ class RegistraController extends Controller
 {
     public function registra(RegistraRequest $request){
         $data = $request->validated();
-        $newContatto = RegistraController::aggiungiContatto($data);
+        if($data){
+            $newContatto = RegistraController::aggiungiContatto($data);
+            if($newContatto){
+                return response()->noContent();
+            }else{
+                abort(500,'Errore creazione contatto');
+            }
+        }else{
+            abort(500,"Errore dati input");
+        }
 
     }
     protected static function aggiungiContatto($data){
