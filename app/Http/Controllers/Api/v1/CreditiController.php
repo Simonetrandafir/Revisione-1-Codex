@@ -70,7 +70,7 @@ class CreditiController extends Controller
     {
         if (Gate::allows('aggiornare')) {
             $data = $request->validated();
-            $credito = $this->trovaIdDatabase($idContatto);
+            $credito = Crediti::all()->where('idContatto',$idContatto)->firstOrFail();
             if (Gate::allows('admin')){
                 $credito->fill($data);
                 $credito->save();
@@ -97,27 +97,6 @@ class CreditiController extends Controller
     }
 
     //------------------- PROTECTED ----------------------
-    /**
-     * Aggiorna id della tabella ricevendo la tabelle, l'id della tabella e il model
-     * 
-     * @param string $tabella
-     * @param string $id
-     * @param string $model
-     */
-    protected static function aggiornaIdDatabase ($tabella,$id){
-        if($tabella!==null&&$id!==null){
-            $maxId = Crediti::max($id);
-            $statement = "ALTER TABLE $tabella AUTO_INCREMENT = $maxId";
-            $query = DB::statement($statement);
-            if ($query !== null){
-                return $query;
-            }else{
-                abort(404,'ATID_XXXX');
-            }
-        }else{
-            abort(404,'ATID-BASE');
-        }
-    }
 
     /**
      * Prende l'id nel database ed il nome del Model e ritorna l'elemento se presente

@@ -12,9 +12,6 @@ use App\Http\Resources\v1\NazioniCompletoResource;
 use App\Http\Resources\v1\NazioniResource;
 use Illuminate\Support\Facades\DB;
 
-if(!defined("MODEL")){
-    define('MODEL','Nazioni');
-}
 class NazioniController extends Controller
 {
     /**

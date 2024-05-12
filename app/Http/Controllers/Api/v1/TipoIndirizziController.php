@@ -94,7 +94,7 @@ class TipoIndirizziController extends Controller
             if (Gate::allows('admin')) {
                 $tipoIndirizzi = $this->trovaIdDatabase($idTipoIndirizzo);
                 $tipoIndirizzi->deleteOrFail();
-                $this->aggiornaIdDatabase('tipo_indirizzi', $idTipoIndirizzo);
+                $this->aggiornaIdDatabase('tipo_indirizzi', 'idTipoIndirizzo');
                 return response()->noContent();
             } else {
                 abort(403,'TICD_0001');

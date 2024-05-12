@@ -23,6 +23,7 @@ class IndirizziSeeder extends Seeder
                 'indirizzo' => 'Via armando diaz',
                 'civico' => '8/b',
                 'citta' => 'Capua',
+                'preferito'=>'1'
             ]
         );
         // Indirizzi::create(

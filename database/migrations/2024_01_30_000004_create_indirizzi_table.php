@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('idContatto')->index();
             $table->unsignedBigInteger('idNazione');
             $table->unsignedBigInteger('idComuneItalia');
-            $table->char('preferito', 1)->nullable();
+            $table->char('preferito', 1)->default('0');
             $table->unsignedBigInteger('cap')->index()->nullable();
             $table->string('indirizzo',255);
             $table->string('civico', 15);

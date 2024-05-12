@@ -64,7 +64,7 @@ class TraduzioniCustomController extends Controller
             if (Gate::allows('admin')) {
                 $traduzione = $this->trovaIdDatabase($idTraduzione);
                 $traduzione->deleteOrFail();
-                $this->aggiornaIdDatabase('traduzioni_customs',$idTraduzione);
+                $this->aggiornaIdDatabase('traduzioni_customs','idTraduzione');
                 return response()->noContent();
             } else {
                 abort(403,'TCCCD_0001');

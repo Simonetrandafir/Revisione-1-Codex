@@ -18,7 +18,7 @@ class PasswordStoreRequest extends FormRequest
         return [
             'idContatto'=>'required|integer',
             'psw'=> 'required|string|max:255',
-            'sale'=> 'required|string|max:255',
+            'sale'=> 'string|max:255',
         ];
     }
 }

@@ -141,7 +141,7 @@ class FilmController extends Controller
         if (Gate::allows('eliminare')) {
             $film = $this->trovaIdDatabase($idFilm);
             $film->deleteOrFail();
-            $this->aggiornaIdDatabase('films', $idFilm);
+            $this->aggiornaIdDatabase('films', 'idFilm');
             return response()->noContent();
         } else {
             abort (403, 'FCD_0006');

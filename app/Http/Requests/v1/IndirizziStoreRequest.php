@@ -21,13 +21,13 @@ class IndirizziStoreRequest extends FormRequest
             'idContatto'=>'required|integer',
             'idNazione'=>'required|integer',
             'idComuneItalia'=>'required|integer',
-            'preferito'=> 'string|mx:1',
+            'preferito'=> 'string|max:1',
             'cap'=>'integer',
             'indirizzo'=>'required|string|max:255',
             'civico'=>'required|string|max:15',
             'citta'=>'required|string|max:255',
-            'lat'=> [Rule::regex('/^-?\d+(\.\d+)?$/')], // Regola per campo double
-            'lng'=> [Rule::regex('/^-?\d+(\.\d+)?$/')], // Regola per campo double
+            'lat'=> 'numeric|max:8.2',
+            'lng'=> 'numeric|max:8.2',
             'altro_1'=>'string|max:45',
             'altro_2'=>'string|max:45',
         ];

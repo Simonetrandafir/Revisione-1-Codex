@@ -90,7 +90,7 @@ class LingueController extends Controller
             if (Gate::allows('admin')) {
                 $lingua = $this->trovaIdDatabase($idLingua);
                 $lingua->deleteOrFail();
-                $this->aggiornaIdDatabase('lingue', $idLingua);
+                $this->aggiornaIdDatabase('lingue', "idLingua");
                 return response()->noContent();
             } else {
                 abort(403,'LCD_0001');

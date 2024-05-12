@@ -84,7 +84,7 @@ class ConfigurazioniController extends Controller
         if (Gate::allows('eliminare')) {
             $configurazione = $this->trovaIdDatabase($idConfigurazione);
             $configurazione->deleteOrFail();
-            $this->aggiornaIdDatabase('configurazioni',$idConfigurazione);
+            $this->aggiornaIdDatabase('configurazioni','idConfigurazioni');
             return response()->noContent();
         } else {
             abort (403, 'CCC_0007');

@@ -66,10 +66,10 @@ class RecapitiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request,$idContatto,$idRecapito)
+    public function show(Request $request,$idContatto)
     {
         if (Gate::allows('leggere')) {
-            $data = $this->trovaIdDatabase($idRecapito);
+            $data = Recapiti::all()->where('idContatto',$idContatto);
             if (Gate::allows('admin')) {
                 return new RecapitiCollection($data);
             } else {
@@ -134,7 +134,7 @@ class RecapitiController extends Controller
             $recapito = $this->trovaIdDatabase($idRecapito);
             if (Gate::allows('admin')){
                 $recapito->deleteOrFail();
-                $this->aggiornaIdDatabase('recapiti', $idRecapito);
+                $this->aggiornaIdDatabase('recapiti', 'idRecapito');
                 return response()->noContent();
             }else{
                 $token = $request->bearerToken();
@@ -145,7 +145,7 @@ class RecapitiController extends Controller
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
                         $recapito->deleteOrFail();
-                        $this->aggiornaIdDatabase('recapiti', $idRecapito);
+                        $this->aggiornaIdDatabase('recapiti', 'idRecapito');
                         return response()->noContent();
                     }else{
                         abort(403,'TKREC_0005');

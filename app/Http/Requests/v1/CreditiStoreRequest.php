@@ -22,7 +22,7 @@ class CreditiStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'crediti'=> 'required|integer',
+            'credito'=> 'required|integer',
         ];
     }
 }

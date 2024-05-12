@@ -141,7 +141,7 @@ class SerieTvController extends Controller
         if (Gate::allows('eliminare')) {
             $serieTv = $this->trovaIdDatabase($idSerieTv);
             $serieTv->deleteOrFail();
-            $this->aggiornaIdDatabase('serie_tv', $serieTv);
+            $this->aggiornaIdDatabase('serie_tv', 'idSerieTv');
             return response()->noContent();
         } else {
             abort (403, 'STV_0006');

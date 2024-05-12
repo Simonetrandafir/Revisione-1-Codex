@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\ControllersApi\v1;
+namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Requests\v1\FilesStoreRequest;

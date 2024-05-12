@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('idPassword');
             $table->unsignedBigInteger('idContatto')->index();
             $table->string('psw',255);
-            $table->string('sale',255);
+            $table->string('sale',255)->nullable();
 
             $table->softDeletes();
             $table->timestamps();

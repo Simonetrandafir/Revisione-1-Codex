@@ -22,15 +22,15 @@ class ContattiSeeder extends Seeder
                 'idNazione'=>1,
             ]
         );
-        // Contatti::create(
-        //     [
-        //         'idStato'=>1,
-        //         'nome'=>'Pinco',
-        //         'cognome'=>'Pallo',
-        //         'cittadinanza'=>'italiana',
-        //         'idNazione'=>1,
-        //     ]
-        // );
+        Contatti::create(
+            [
+                'idStato'=>1,
+                'nome'=>'Pinco',
+                'cognome'=>'Pallo',
+                'cittadinanza'=>'italiana',
+                'idNazione'=>1,
+            ]
+        );
         // Contatti::create(
         //     [
         //         'idStato'=>1,

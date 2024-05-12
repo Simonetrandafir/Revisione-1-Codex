@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('idTipoRecapito');
             $table->string('recapito',255);
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('idContatto')->references('idContatto')->on('contatti');

@@ -90,7 +90,7 @@ class AbilitaController extends Controller
             if (Gate::allows('admin')) {
                 $abilita= Abilita::find($idAbilita);
                 $abilita->deleteOrFail();
-                $this->aggiornaIdDatabase('abilita',$idAbilita);
+                $this->aggiornaIdDatabase('abilita','idAbilita');
                 return response()->noContent();
             } else {
                 abort(404,'ABCD_0001');

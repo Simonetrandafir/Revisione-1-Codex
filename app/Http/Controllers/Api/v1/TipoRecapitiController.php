@@ -89,7 +89,7 @@ class TipoRecapitiController extends Controller
             if (Gate::allows('admin')) {
                 $risorsa = $this->trovaIdDatabase($idTipoRecapito);
                 $risorsa->deleteOrFail();
-                $this->aggiornaIdDatabase('tipo_recapiti', $idTipoRecapito);
+                $this->aggiornaIdDatabase('tipo_recapiti', 'idTipoRecapito');
                 return response()->noContent();
             } else {
                 abort(403,'TRD_0001');

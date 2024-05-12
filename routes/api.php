@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\AppHelpers;
 use App\Http\Controllers\Api\v1\AbilitaController;
 use App\Http\Controllers\Api\v1\AccediController;
 use App\Http\Controllers\Api\v1\CalcoloIva;
@@ -27,7 +28,7 @@ use App\Http\Controllers\Api\v1\VistaTraduzioniController;
 use App\Http\Controllers\Api\v1\IndirizziController;
 use App\Http\Controllers\Api\v1\PasswordController;
 use App\Http\Controllers\Api\v1\RecapitiController;
-use App\Http\ControllersApi\v1\FilesController;
+use App\Http\Controllers\Api\v1\FilesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,6 +91,34 @@ if (!defined('SERIE_ID')){
 if (!defined('EPISODI_ID')){
     define('EPISODI_ID','/episodi/{idEpisodio}');
 }
+
+
+//!------------------------------------ TEST ---------------------------------------------------------
+//---------------------------------------------------- TEST ----------------------------------------------------
+Route::get(VERSIONE . '/testLogin/admin', function () {
+    $hashUsername='b65f3239ff11929e77029d607bd566d4f21fa36f44874313da0fa746f202fe42f581e569f1aeda5ac51327a4bf64b3058ec450e85c4fdd219e955d083ae35c7f';
+    $hashEmail = "7d0b953f8bcd9ad869b18651d5e80ae51734dcdf15755a5896e0145114c92718b254178ec579ece7cd47abf01378d4bf7fedf6f1c878395dc5486db23cd81c79";
+    $psw = "cae167b89dca819271e9644b7c2807d9504f73fbd0e8553fa9ef3f83656ebb6e94ead7e819c3a424e5c5045e063f60365b42fda9ddb147724db984a24d367500";
+    //effettua login e insiresci qui sale
+    $sale = "825b45433a3fc059d9314e730ecae7a500837833268728e6898f73309c9425774fda7249477bb1baaa6ae59ccfe3311866157af1d783092fad16e5ef6ca4db57";
+    
+    $hashSalePsw = AppHelpers::nascondiPassword($psw, $sale);
+    
+    AccediController::testLogin($hashUsername,$hashEmail, $hashSalePsw);
+    
+});
+Route::get(VERSIONE . '/testLogin/utente', function () {
+    $hashUsername='547b32da8ab3cd7ecfca311aafb048d9532bc38ddba013be808572d0911a5292162f97371127d3b4f43752dd0e0748a99d4f3c263e6fe9ae92e7c4041b33c3bc';
+    $hashEmail = "f9ea35bdeab9c8a039682f0fd2a49f437e5503e100cef907d10f409555bf9b6ec55db861a52744f8fe417e672ae820f13213790bffa5f50b5f28885840ee40f2";
+    $psw = "a06c15a9cbdc427e399a27efb407a8668130a034494cf462a2ef8571a57fe5b7385249954bb307789362fe18fa418b4a8bff87c7e9d1bc2e9d22d7b6c7b919e3";
+    //effettua login e insiresci qui sale
+    $sale = "06405151c0c5b18ef29f3784e467bd4a5a459b10b973d5b96a7d9bd8912f811cedf66ab7ef78c3a76cde190b38d4041631485e0fbe080556923a8d3dd879a62e";
+    
+    $hashSalePsw = AppHelpers::nascondiPassword($psw, $sale);
+    
+    AccediController::testLogin($hashUsername,$hashEmail, $hashSalePsw);
+});
+//!------------------------------------ TEST ---------------------------------------------------------
 
 //?---------------------------------------------------ENDPOINT---------------------------------------
 
@@ -181,28 +210,28 @@ Route::middleware(["autenticazione", "ruoli:admin,utente"])->group(function(){
     Route::get(VERSIONE . '/episodi/{idEpisodio}', [EpisodiController::class,'showEpisodio']);
     Route::get(VERSIONE . '/serieTv/{idSerieTv}/episodi', [EpisodiController::class,'episodiSerieTv']);
 
-    // -------------------------- CREDITI ---------------------------------------
+    // -------------------------- CREDITI ---------------------------------------tested
     Route::get(VERSIONE . '/crediti/{idContatto}', [CreditiController::class,'show']);
     Route::put(VERSIONE . AGGIORNA .'/crediti/{idContatto}', [CreditiController::class,'update']);
 
-    // -------------------------- FILES ---------------------------------------------------------
+    // -------------------------- FILES ---------------------------------------------------------tested
     Route::get(VERSIONE .'/files/{idFile}',[FilesController::class,'show']);
 
-    //------------------------------- INDIRIZZI ----------------------------------------
-    Route::get(VERSIONE . '/indirizzi/{idContatto}',[IndirizziController::class,'show']);
-    Route::post(VERSIONE .SALVA. '/indirizzi/{idContatto}',[IndirizziController::class,'aggiungiIndirizzo']);
+    //------------------------------- INDIRIZZI ----------------------------------------tested
+    Route::get(VERSIONE .'/indirizzi/{idContatto}',[IndirizziController::class,'indexUtente']);
+    Route::post(VERSIONE.SALVA .'/indirizzi/{idContatto}',[IndirizziController::class,'aggiungiIndirizzo']);
+    Route::get(VERSIONE . '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'show']);
     Route::put(VERSIONE .AGGIORNA. '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'update']);
     Route::delete(VERSIONE .DISTRUGGI. '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'destroy']);
-    //------------------------------- RECAPITI ----------------------------------------
+    //------------------------------- RECAPITI ----------------------------------------tested
     Route::get(VERSIONE . '/recapiti/{idContatto}',[RecapitiController::class,'show']);
     Route::post(VERSIONE .SALVA. '/recapiti/{idContatto}',[RecapitiController::class,'aggiungiRecapito']);
     Route::put(VERSIONE .AGGIORNA. '/recapiti/{idContatto}/{idRecapito}',[RecapitiController::class,'update']);
     Route::delete(VERSIONE .DISTRUGGI. '/recapiti/{idContatto}/{idRecapito}',[RecapitiController::class,'destroy']);
     
-    //--------------------------- PASSWORDS ---------------------------------------------
-    Route::get(VERSIONE . '/passwords/{idContatto}',[PasswordController::class,'show']);
+    //--------------------------- PASSWORDS ---------------------------------------------tested
     Route::post(VERSIONE .SALVA .'/passwords/{idContatto}',[PasswordController::class,'aggiungiPassword']);
-    Route::put(VERSIONE . AGGIORNA . '/passwords/{idContatto}/{idPassword}',[PasswordController::class,'update']);
+    Route::put(VERSIONE . AGGIORNA . '/passwords/{idContatto}',[PasswordController::class,'update']);
 });
 
 //?#################################################################################################################

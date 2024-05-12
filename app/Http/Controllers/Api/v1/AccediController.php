@@ -15,6 +15,16 @@ use Illuminate\Support\Str;
 
 class AccediController extends Controller
 {
+
+//!-------------------------------------- TEST --------------------------------------------------------------
+    public static function testLogin($hashUsername,$hashEmail, $hashSalePsw)
+    {
+
+        print_r(AccediController::controlloPassword($hashUsername,$hashEmail, $hashSalePsw));
+    }
+
+//!-------------------------------------- TEST --------------------------------------------------------------
+
     /**
      * Cerca l'hash dello email nel DB
      */

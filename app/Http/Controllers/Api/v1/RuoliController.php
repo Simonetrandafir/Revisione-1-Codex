@@ -92,7 +92,7 @@ class RuoliController extends Controller
             if (Gate::allows('admin')) {
                 $ruolo= Ruoli::find($idRuolo);
                 $ruolo->deleteOrFail();
-                $this->aggiornaIdDatabase('ruoli',$idRuolo);
+                $this->aggiornaIdDatabase('ruoli','idRuolo');
                 return response()->noContent();
             } else {
                 abort(404,'RCD_0001');

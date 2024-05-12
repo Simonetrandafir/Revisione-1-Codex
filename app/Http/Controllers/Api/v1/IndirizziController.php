@@ -16,6 +16,57 @@ use Illuminate\Support\Facades\Gate;
 
 class IndirizziController extends Controller
 {
+    public function aggiungiIndirizzo(IndirizziStoreRequest $request, $idContatto)
+    {
+        if (Gate::allows('aggiornare')) {
+            $data = $request->validated();
+            if (Gate::allows('admin')){
+                $indirizzo=Indirizzi::create($data);
+                return new IndirizziResource($indirizzo);
+            }else{
+                $token = $request->bearerToken();
+                if (!$token) { // Verifica se il token è presente nella richiesta
+                    abort(403, 'TKINC_0004');
+                }else{
+                    //controllo che l'idContatto corrisponda all'id nel token
+                    $controllo = $this->controlloId($idContatto,$token);
+                    if ($controllo === true){
+                        $indirizzo=Indirizzi::create($data);
+                        return new IndirizziResource($indirizzo);
+                    }else{
+                        abort(403,'TKINC_0005');
+                    }
+                }
+            }
+        } else {
+            abort(403, 'INC-U_0007');
+        }
+    }
+    public function indexUtente(Request $request, $idContatto)
+    {
+        if (Gate::allows('leggere')) {
+            if (Gate::allows('admin')) {
+                $risorsa = Indirizzi::all()->where('idContatto', $idContatto);
+                return new IndirizziCollection($risorsa);
+            } else {
+                $token = $request->bearerToken();
+                if (!$token) { // Verifica se il token è presente nella richiesta
+                    abort(403, 'TKINUC_0004');
+                }else{
+                    //controllo che l'idContatto corrisponda all'id nel token
+                    $controllo = $this->controlloId($idContatto,$token);
+                    if ($controllo === true){
+                        $risorsa = Indirizzi::all()->where('idContatto', $idContatto);
+                        return new IndirizziCollection($risorsa);
+                    }else{
+                        abort(403,'TKINUC_0005');
+                    }
+                }
+            }
+        } else {
+            abort(404, 'INUC_0001');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
@@ -33,44 +84,13 @@ class IndirizziController extends Controller
         }
     }
 
-     /**
-     * Aggiunge un nuovo indirizzo oltre quello fornito nella registrazione
-     */
-    public function aggiungiIndirizzo(IndirizziStoreRequest $request,$idContatto)
-    {
-        if (Gate::allows('aggiornare')) {
-            $data = $request->validated();
-
-            if (Gate::allows('admin')){
-                $indirizzo = Indirizzi::create($data);
-                return new IndirizziResource($indirizzo);
-            }else{
-                $token = $request->bearerToken();
-                if (!$token) { // Verifica se il token è presente nella richiesta
-                    abort(403, 'TKINC_0004');
-                }else{
-                    //controllo che l'idContatto corrisponda all'id nel token
-                    $controllo = $this->controlloId($idContatto,$token);
-                    if ($controllo === true){
-                        $indirizzo = Indirizzi::create($data);
-                    }else{
-                        abort(403,'TKINC_0005');
-                    }
-                    return new IndirizziResource($indirizzo);
-                }
-            }
-        } else {
-            abort(404, 'CON-C_0001');
-        }
-    }
-
     /**
      * Display the specified resource.
      */
-    public function show(Request $request,$idContatto)
+    public function show(Request $request,$idContatto,$idIndirizzo)
     {
         if (Gate::allows('leggere')) {
-            $data = $this->trovaIdDatabase($idContatto);
+            $data = Indirizzi::findOrFail($idIndirizzo);
             if (Gate::allows('admin')) {
                 return new IndirizziResource($data);
             } else {
@@ -135,7 +155,7 @@ class IndirizziController extends Controller
             $indirizzo = $this->trovaIdDatabase($idIndirizzo);
             if (Gate::allows('admin')){
                 $indirizzo->deleteOrFail();
-                $this->aggiornaIdDatabase('indirizzi', $idIndirizzo);
+                $this->aggiornaIdDatabase('indirizzi', 'idIndirizzo');
                 return response()->noContent();
             }else{
                 $token = $request->bearerToken();
@@ -146,7 +166,7 @@ class IndirizziController extends Controller
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
                         $indirizzo->deleteOrFail();
-                        $this->aggiornaIdDatabase('indirizzi', $idIndirizzo);
+                        $this->aggiornaIdDatabase('indirizzi', 'idIndirizzo');
                         return response()->noContent();
                     }else{
                         abort(403,'TKINC_0005');
@@ -159,27 +179,6 @@ class IndirizziController extends Controller
     }
 
     // -----------------------------------------------------------------------------//
-    //          *****   PROTECTED   *****           //
-    /**
-     * Aggiorna id della tabella ricevendo la tabelle, l'id della tabella e il model
-     * 
-     * @param string $tabella
-     * @param string $id
-     */
-    protected static function aggiornaIdDatabase ($tabella,$id){
-        if($tabella!==null&&$id!==null){
-            $maxId = Indirizzi::max($id);
-            $statement = "ALTER TABLE $tabella AUTO_INCREMENT = $maxId";
-            $query = DB::statement($statement);
-            if ($query !== null){
-                return $query;
-            }else{
-                abort(404,'ATID_XXXX');
-            }
-        }else{
-            abort(404,'ATID-BASE');
-        }
-    }
 
     /**
      * Prende l'id nel database ed il nome del Model e ritorna l'elemento se presente
@@ -187,7 +186,7 @@ class IndirizziController extends Controller
      * @param string $id
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Indirizzi::where('idContatto',$id)->firstOrFail();
+        $risorsa = Indirizzi::where('idContatto',$id)->where('preferito',1)->firstOrFail();
         if ($risorsa !== null){
             return $risorsa;
         }else{

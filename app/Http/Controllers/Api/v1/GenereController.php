@@ -104,7 +104,7 @@ class GenereController extends Controller
         if (Gate::allows('eliminare')){
             $genere = $this->trovaIdDatabase($idGenere);
             $genere->deleteOrFail();
-            $this->aggiornaIdDatabase('genere', $idGenere);
+            $this->aggiornaIdDatabase('genere','idGenere');
             return response()->noContent();
         }else{
             abort(404,'CGD_0006');

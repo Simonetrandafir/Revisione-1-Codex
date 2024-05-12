@@ -121,7 +121,7 @@ class EpisodiController extends Controller
         if (Gate::allows('eliminare')) {
             $episodio = $this->trovaIdDatabase($idEpisodio);
             $episodio->deleteOrFail();
-            $this->aggiornaIdTabella('episodi',$idEpisodio);
+            $this->aggiornaIdTabella('episodi','idEpisodio');
             return response()->noContent();
         } else {
             abort (403, 'EPC_0006');

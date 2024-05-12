@@ -22,12 +22,14 @@ class ContattiAuthSeeder extends Seeder
             'email' => AccediController::hash($email),
             'secretJWT' => '',
         ]);
-        // $username = 'pincopallo@email.it';
-        // ContattiAuth::create([
-        //     'idContatto' => 2,
-        //     'username' => AccediController::hash($username),
-        //     'secretJWT' => '',
-        // ]);
+        $username='Utente00';
+        $email = 'pincopallo@email.it';
+        ContattiAuth::create([
+            'idContatto' => 2,
+            'username' => AccediController::hash($username),
+            'email' => AccediController::hash($email),
+            'secretJWT' => '',
+        ]);
         // $username = 'test@email.it';
         // ContattiAuth::create([
         //     'idContatto' => 3,

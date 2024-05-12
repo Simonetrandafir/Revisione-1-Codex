@@ -62,43 +62,15 @@ class PasswordController extends Controller
             abort(404, 'PSC-ADD_0001');
         }
     }
-    /**
-     * Display the specified resource.
-     */
-    public function show(Request $request,$idContatto)
-    {
-        if (Gate::allows('leggere')) {
-            $password = $this->trovaIdDatabase($idContatto);
-            if (Gate::allows('admin')) {
-                return new PasswordResource($password);
-            } else {
-                //se la richiesta viene dall'utente prendo token
-                $token = $request->bearerToken();
-                if (!$token) { // Verifica se il token è presente nella richiesta
-                    abort(403, 'TKPC_0001');
-                }else{
-                    //controllo che l'idContatto corrisponda all'id nel token
-                    $controllo = $this->controlloId($idContatto,$token);
-                    if ($controllo === true){
-                        return new PasswordResource($password);
-                    }else{
-                        abort(403,'TKPC_0000');
-                    }
-                }
-            }
-        } else {
-            abort(403, 'PSC-S_0004');
-        }
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PasswordUpdateRequest $request,$idContatto,$idPassword)
+    public function update(PasswordUpdateRequest $request,$idContatto)
     {
         if (Gate::allows('aggiornare')) {
             $data = $request->validated();
-            $password = $this->trovaIdDatabase($idPassword);
+            $password = $this->trovaIdDatabase($idContatto);
             if (Gate::allows('admin')){
                 $password->fill($data);
                 $password->save();
@@ -126,27 +98,6 @@ class PasswordController extends Controller
 
     // -----------------------------------------------------------------------------//
     //          *****   PROTECTED   *****           //
-    /**
-     * Aggiorna id della tabella ricevendo la tabelle, l'id della tabella e il model
-     * 
-     * @param string $tabella
-     * @param string $id
-     * @param string $model
-     */
-    protected static function aggiornaIdDatabase ($tabella,$id){
-        if($tabella!==null&&$id!==null){
-            $maxId = Password::max($id);
-            $statement = "ALTER TABLE $tabella AUTO_INCREMENT = $maxId";
-            $query = DB::statement($statement);
-            if ($query !== null){
-                return $query;
-            }else{
-                abort(404,'ATID_XXXX');
-            }
-        }else{
-            abort(404,'ATID-BASE');
-        }
-    }
 
     /**
      * Prende l'id nel database ed il nome del Model e ritorna l'ultimo elemento se presente
@@ -155,7 +106,7 @@ class PasswordController extends Controller
      * @param string $model
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Password::findOrFail($id)->latest();
+        $risorsa = Password::all()->where('idContatto',$id)->last();
         if ($risorsa !== null){
             return $risorsa;
         }else{
