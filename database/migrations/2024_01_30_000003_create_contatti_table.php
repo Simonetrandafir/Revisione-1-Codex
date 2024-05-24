@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('partitaIva',45)->nullable();
             $table->string('cittadinanza',45)->nullable();
             $table->unsignedBigInteger('idNazione')->nullable();
-            $table->string('cittaNascita',45)->nullable();
-            $table->string('provinciaNascita',45)->nullable();
+            $table->string('citta',45)->nullable();
+            $table->string('provincia',45)->nullable();
             $table->date('dataNascita')->nullable();
 
 

@@ -186,7 +186,7 @@ class IndirizziController extends Controller
      * @param string $id
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Indirizzi::where('idContatto',$id)->where('preferito',1)->firstOrFail();
+        $risorsa = Indirizzi::firstOrFail($id);
         if ($risorsa !== null){
             return $risorsa;
         }else{

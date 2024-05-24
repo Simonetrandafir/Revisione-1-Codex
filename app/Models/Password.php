@@ -29,6 +29,10 @@ class Password extends Model
         return Password::where('idContatto',$idContatto)->orderBy('idPassword','desc')->firstOrFail();
          
     }
+    public static function passwordScadute($idContatto){
+        $totali=Password::where('idContatto',$idContatto)->count();
+        return Password::where('idContatto',$idContatto)->orderBy('created_at','asc')->take($totali - 1)->get();
+    }
 
     //---------------------RITORNO | APPARTENNENZA----------------------------------
     /**

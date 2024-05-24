@@ -22,8 +22,33 @@ class IndirizziSeeder extends Seeder
                 'cap' => 83020,
                 'indirizzo' => 'Via armando diaz',
                 'civico' => '8/b',
-                'citta' => 'Capua',
-                'preferito'=>'1'
+                'citta' => 'Domicella',
+                'preferito'=>'1',
+            ]
+        );
+        Indirizzi::create(
+            [
+                'idTipoIndirizzo' => 2,
+                'idContatto' => 1,
+                'idNazione' => 1,
+                'idComuneItalia' => 6171,
+                'cap' => 83020,
+                'indirizzo' => 'Via  diaz',
+                'civico' => '8/b',
+                'citta' => 'Domicella',
+            ]
+        );
+        Indirizzi::create(
+            [
+                'idTipoIndirizzo' => 3,
+                'idContatto' => 1,
+                'idNazione' => 1,
+                'idComuneItalia' => 6171,
+                'cap' => 83020,
+                'indirizzo' => 'Via armando ',
+                'civico' => '8/b',
+                'citta' => 'Domicella',
+                'preferito'=>'1',
             ]
         );
         // Indirizzi::create(

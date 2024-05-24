@@ -32,6 +32,30 @@ class PasswordController extends Controller
         }
     }
 
+    public function show(Request $request,$idContatto){
+        if (Gate::allows('leggere')) {
+            $data=$this->trovaIdDatabase($idContatto);
+            if (Gate::allows('admin')) {
+                return new PasswordResource($data);
+            }else{
+                $token = $request->bearerToken();
+                if (!$token) { // Verifica se il token è presente nella richiesta
+                    abort(403, 'TKPC_0004');
+                }else{
+                    //controllo che l'idContatto corrisponda all'id nel token
+                    $controllo = $this->controlloId($idContatto,$token);
+                    if ($controllo === true){
+                        return new PasswordResource($data);
+                    }else{
+                        abort(403,'TKPC_0005');
+                    }
+                }
+            }
+        }else{
+            abort(404, 'PSWC-S');
+        }
+    }
+
      /**
      * Aggiunge un nuovo password oltre quello fornito nella registrazione
      */
@@ -63,36 +87,34 @@ class PasswordController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(PasswordUpdateRequest $request,$idContatto)
-    {
+    public function destroy(Request $request,$idContatto){
         if (Gate::allows('aggiornare')) {
-            $data = $request->validated();
-            $password = $this->trovaIdDatabase($idContatto);
-            if (Gate::allows('admin')){
-                $password->fill($data);
-                $password->save();
-                return new PasswordResource($password);
-            }else{
-                $token = $request->bearerToken();
+            if(Gate::allows('utente')){
+                $data=Password::passwordScadute($idContatto);
+                if(!$data){
+                    abort(404,'PSC-D-0003');
+                }else{
+                    $token = $request->bearerToken();
                 if (!$token) { // Verifica se il token è presente nella richiesta
-                    abort(403, 'TKPC_0004');
+                    abort(403, 'TKPC-D-0004');
                 }else{
                     //controllo che l'idContatto corrisponda all'id nel token
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
-                        $password->fill($data);
-                        $password->save();
+                        foreach ($data as $psw) {
+                            $psw->deleteOrFail();
+                        }
+                        return response()->noContent();
                     }else{
-                        abort(403,'TKPC_0005');
+                        abort(403,'TKPSC-D-0005');
                     }
-                    return new PasswordResource($password);
                 }
+                }
+            }else{
+                abort(403, 'PSC-D-0002');
             }
-        } else {
-            abort(403, 'PSC-U_0007');
+        }else{
+            abort(404,'PSC-D-0001');
         }
     }
 
@@ -106,7 +128,7 @@ class PasswordController extends Controller
      * @param string $model
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Password::all()->where('idContatto',$id)->last();
+        $risorsa = Password::where('idContatto',$id)->orderBy('created_at','desc')->firstOrFail();
         if ($risorsa !== null){
             return $risorsa;
         }else{

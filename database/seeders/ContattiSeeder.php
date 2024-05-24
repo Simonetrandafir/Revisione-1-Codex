@@ -18,8 +18,13 @@ class ContattiSeeder extends Seeder
                 'idStato'=>1,
                 'nome'=>'Simone',
                 'cognome'=>'Trandafir',
-                'cittadinanza'=>'italiana',
+                'sesso'=>'1',
+                'codFiscale'=>'GFGFHNDN869DG',
+                'cittadinanza'=>'Italiana',
                 'idNazione'=>1,
+                'citta'=>'Domicella',
+                'provincia'=>'Avellino',
+                'dataNascita'=>new \DateTime('2024-05-18 15:30:00'),
             ]
         );
         Contatti::create(

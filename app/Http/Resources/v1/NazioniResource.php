@@ -23,12 +23,12 @@ class NazioniResource extends JsonResource
     protected function getNazione()
     {
         return [
-            'ID' => $this->idNazione,
-            'Nome' => $this->nome,
-            'Continente' => $this->continente,
+            'idNazione' => $this->idNazione,
+            'nome' => $this->nome,
+            'continente' => $this->continente,
             'iso' => $this->iso,
             'iso3' => $this->iso3,
-            'Prefisso' => $this->prefissoTel,
+            'prefissoTel' => $this->prefissoTel,
         ];
     }
 

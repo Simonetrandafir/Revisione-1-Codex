@@ -33,6 +33,35 @@ class RecapitiController extends Controller
         }
     }
 
+    public function indexUtente(Request $request, $idContatto)
+    {
+        if (Gate::allows('leggere')) {
+            if (Gate::allows('admin')) {
+                $risorsa = Recapiti::where('idContatto', $idContatto)->orderBy('created_at','desc')->get();
+                if(!$risorsa){
+                    abort(404,'COGLIONE');
+                }
+                return new RecapitiCollection($risorsa);
+            } else {
+                $token = $request->bearerToken();
+                if (!$token) { // Verifica se il token è presente nella richiesta
+                    abort(403, 'TKRC_0004');
+                }else{
+                    //controllo che l'idContatto corrisponda all'id nel token
+                    $controllo = $this->controlloId($idContatto,$token);
+                    if ($controllo === true){
+                        $risorsa = Recapiti::where('idContatto', $idContatto)->orderByDesc('created_at')->get();
+                        return new RecapitiCollection($risorsa);
+                    }else{
+                        abort(403,'TKRC_0005');
+                    }
+                }
+            }
+        } else {
+            abort(404, 'RCIU_0001');
+        }
+    }
+
      /**
      * Aggiunge un nuovo recapito oltre quello fornito nella registrazione
      */
@@ -66,12 +95,12 @@ class RecapitiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request,$idContatto)
+    public function show(Request $request,$idContatto,$idRecapito)
     {
         if (Gate::allows('leggere')) {
-            $data = Recapiti::all()->where('idContatto',$idContatto);
+            $data = $this->trovaIdDatabase($idRecapito );
             if (Gate::allows('admin')) {
-                return new RecapitiCollection($data);
+                return new RecapitiResource($data);
             } else {
                 //se la richiesta viene dall'utente prendo token
                 $token = $request->bearerToken();
@@ -81,7 +110,7 @@ class RecapitiController extends Controller
                     //controllo che l'idContatto corrisponda all'id nel token
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
-                        return new RecapitiCollection($data);
+                        return new RecapitiResource($data);
                     }else{
                         abort(403,'TKREC_0000');
                     }

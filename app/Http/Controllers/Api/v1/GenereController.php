@@ -62,9 +62,9 @@ class GenereController extends Controller
      */
     public function show($idGenere)
     {
-        $genere = $this->trovaIdDatabase($idGenere);
         if (Gate::allows('leggere')) {
             if (Gate::allows('admin')) {
+                $genere = $this->trovaIdDatabase($idGenere);
                 return $this->creaRisorsa($genere);
             } else {
                 $genere = Genere::where('idGenere',$idGenere)

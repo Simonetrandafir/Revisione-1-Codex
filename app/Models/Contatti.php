@@ -25,8 +25,8 @@ class Contatti extends Authenticatable
         'partitaIva',
         'cittadinanza',
         'idNazione',
-        'cittaNascita',
-        'provinciaNascita',
+        'citta',
+        'provincia',
         'dataNascita',
     ];
 

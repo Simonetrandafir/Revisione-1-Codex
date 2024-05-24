@@ -54,9 +54,14 @@ class ComuniItalianiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ComuniItaliani $comuniItaliani)
+    public function show($idComuneItalia)
     {
-        //
+        $data=ComuniItaliani::find($idComuneItalia);
+        if($data){
+            return new ComuniItalianiResource($data);
+        }else{
+            abort(404,"COM-C-S");
+        }
     }
 
 

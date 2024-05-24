@@ -23,6 +23,7 @@ class CreditiResource extends JsonResource
                 'idCredito'=>$this->idCredito,
                 'idContatto'=>$this->idContatto,
                 'credito'=>$this->credito,
+                'updated_at'=>$this->updated_at
             ];
         }
 }

@@ -20,9 +20,11 @@ class PasswordResource extends JsonResource
     //---------------------PROTECTED---------------------------------------
     protected function getCampi(){
         return [
+            "idPassword"=> $this->idPassword,
             'idContatto'=>$this->idContatto,
-            'psw'=>$this->psw,
-            'sale'=>$this->sale,
+            'updated_at'=>$this->updated_at,
+            'created_at'=>$this->created_at,
+
         ];
     }
 }

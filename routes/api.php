@@ -104,6 +104,7 @@ Route::get(VERSIONE . '/accedi/{username}/{email}/{hash?}',[AccediController::cl
 
 //-----------COMUNI ITALIANI----------------------------------------tested
 Route::get(VERSIONE . '/comuniItaliani', [ComuniItalianiController::class,'index']);
+Route::get(VERSIONE . '/comuniItaliani/{idComuneItalia}', [ComuniItalianiController::class,'show']);
 
 // --------------------- NAZIONI ------------------------------------tested
 Route::get(VERSIONE . '/nazioni', [NazioniController::class,'index']);
@@ -192,19 +193,21 @@ Route::middleware(["autenticazione", "ruoli:admin,utente"])->group(function(){
 
     //------------------------------- INDIRIZZI ----------------------------------------tested
     Route::get(VERSIONE .'/indirizzi/{idContatto}',[IndirizziController::class,'indexUtente']);
-    Route::post(VERSIONE.SALVA .'/indirizzi/{idContatto}',[IndirizziController::class,'aggiungiIndirizzo']);
     Route::get(VERSIONE . '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'show']);
+    Route::post(VERSIONE.SALVA .'/indirizzi/{idContatto}',[IndirizziController::class,'aggiungiIndirizzo']);
     Route::put(VERSIONE .AGGIORNA. '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'update']);
     Route::delete(VERSIONE .DISTRUGGI. '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'destroy']);
     //------------------------------- RECAPITI ----------------------------------------tested
-    Route::get(VERSIONE . '/recapiti/{idContatto}',[RecapitiController::class,'show']);
+    Route::get(VERSIONE . '/recapiti/{idContatto}',[RecapitiController::class,'indexUtente']);
+    Route::get(VERSIONE . '/recapiti/{idContatto}/{idRecapito}',[RecapitiController::class,'show']);
     Route::post(VERSIONE .SALVA. '/recapiti/{idContatto}',[RecapitiController::class,'aggiungiRecapito']);
     Route::put(VERSIONE .AGGIORNA. '/recapiti/{idContatto}/{idRecapito}',[RecapitiController::class,'update']);
     Route::delete(VERSIONE .DISTRUGGI. '/recapiti/{idContatto}/{idRecapito}',[RecapitiController::class,'destroy']);
     
     //--------------------------- PASSWORDS ---------------------------------------------tested
+    Route::get(VERSIONE .'/passwords/{idContatto}',[PasswordController::class,'show']);
     Route::post(VERSIONE .SALVA .'/passwords/{idContatto}',[PasswordController::class,'aggiungiPassword']);
-    Route::put(VERSIONE . AGGIORNA . '/passwords/{idContatto}',[PasswordController::class,'update']);
+    Route::delete(VERSIONE . DISTRUGGI. '/passwords/{idContatto}',[PasswordController::class,'destroy']);
 });
 
 //?#################################################################################################################

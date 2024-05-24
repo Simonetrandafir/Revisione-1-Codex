@@ -20,5 +20,19 @@ class RecapitiSeeder extends Seeder
                 'recapito'=>'33369983844'
             ]
         );
+        Recapiti::create(
+            [
+                'idContatto'=>1,
+                'idTipoRecapito'=>3,
+                'recapito'=>'00000000'
+            ]
+        );
+        Recapiti::create(
+            [
+                'idContatto'=>1,
+                'idTipoRecapito'=>2,
+                'recapito'=>'05456165'
+            ]
+        );
     }
 }
