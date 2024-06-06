@@ -20,6 +20,7 @@ class IndirizziResource extends JsonResource
     //---------------------PROTECTED---------------------------------------
     protected function getCampi(){
         return [
+            'idIndirizzo'=>$this->idIndirizzo,
             'idTipoIndirizzo'=>$this->idTipoIndirizzo,
             'idContatto'=>$this->idContatto,
             'idNazione'=>$this->idNazione,

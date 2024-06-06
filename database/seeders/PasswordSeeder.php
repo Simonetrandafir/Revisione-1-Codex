@@ -20,12 +20,7 @@ class PasswordSeeder extends Seeder
             'psw' => AccediController::hash($psw1),
             'sale' => ''
         ]);
-        $psw2 = '123Utente';
-        Password::create([
-            'idContatto' => 2,
-            'psw' => AccediController::hash($psw2),
-            'sale' => ''
-        ]);
+
         // $psw3 = '123Test';
         // Password::create([
         //     'idContatto' => 3,

@@ -31,8 +31,8 @@ class ContattoStoreRequest extends FormRequest
             "partitaIva" => 'string|max:45',
             "cittadinanza" => 'string|max:45',
             "idNazione" => 'string|max:45',
-            "cittaNascita" => 'string|max:45',
-            "provinciaNascita"=> 'string|max:45',
+            "citta" => 'string|max:45',
+            "provincia"=> 'string|max:45',
             "dataNascita"=> "string|max:255",
         ];
     }

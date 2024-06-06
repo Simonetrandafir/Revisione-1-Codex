@@ -42,7 +42,7 @@ class Sessioni extends Model
      */
     public static function datiSessione($token){
         if (Sessioni::esisteSessione($token)){
-            return Sessioni::where('token',$token)->get()->first();
+            return Sessioni::where('token',$token)->get()->firstOrFail();
         }else{
             return null;
         }
@@ -52,6 +52,6 @@ class Sessioni extends Model
      * Controlla se esiste sessione con token
      */
     public static function esisteSessione($token) {
-        return DB::table('sessioni')->where('token',$token)->exists();
+        return Sessioni::where('token',$token)->exists();
     }
 }

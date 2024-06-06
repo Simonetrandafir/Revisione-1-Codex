@@ -31,8 +31,8 @@ class ContattiResource extends JsonResource
             "partitaIva" => $this->partitaIva,
             "cittadinanza" => $this->cittadinanza,
             "idNazione" => $this->idNazione,
-            "cittaNascita" => $this->cittaNascita,
-            "provinciaNascita" => $this->provinciaNascita,
+            "citta" => $this->cittaNascita,
+            "provincia" => $this->provinciaNascita,
             "dataNascita" => $this->dataNascita,
         ];
     }

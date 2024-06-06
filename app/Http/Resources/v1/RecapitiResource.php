@@ -20,6 +20,7 @@ class RecapitiResource extends JsonResource
     //---------------------PROTECTED---------------------------------------
     protected function getCampi(){
         return [
+            'idRecapito'=>$this->idRecapito,
             'idContatto'=>$this->idContatto,
             'idTipoRecapito'=>$this->idTipoRecapito,
             'recapito'=>$this->recapito,

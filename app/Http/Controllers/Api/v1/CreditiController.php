@@ -40,8 +40,8 @@ class CreditiController extends Controller
     {
         
         if (Gate::allows('leggere')) {
-            $credito = $this->trovaIdDatabase($idContatto);
             if (Gate::allows('admin')) {
+                $credito = $this->trovaIdDatabase($idContatto);
                 return new CreditiResource($credito);
             } else {
                 //se la richiesta viene dall'utente prendo token
@@ -52,6 +52,7 @@ class CreditiController extends Controller
                     //controllo che l'idContatto corrisponda all'id nel token
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
+                        $credito = $this->trovaIdDatabase($idContatto);
                         return new CreditiResource($credito);
                     }else{
                         abort(403,'TK-CRC_0009');
@@ -105,7 +106,7 @@ class CreditiController extends Controller
      * @param string $model
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Crediti::findOrFail($id);
+        $risorsa = Crediti::all()->where('idContatto',$id)->firstOrFail();
         if ($risorsa !== null){
             return $risorsa;
         }else{

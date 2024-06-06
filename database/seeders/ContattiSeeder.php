@@ -27,23 +27,6 @@ class ContattiSeeder extends Seeder
                 'dataNascita'=>new \DateTime('2024-05-18 15:30:00'),
             ]
         );
-        Contatti::create(
-            [
-                'idStato'=>1,
-                'nome'=>'Pinco',
-                'cognome'=>'Pallo',
-                'cittadinanza'=>'italiana',
-                'idNazione'=>1,
-            ]
-        );
-        // Contatti::create(
-        //     [
-        //         'idStato'=>1,
-        //         'nome'=>'test',
-        //         'cognome'=>'test',
-        //         'cittadinanza'=>'italiana',
-        //         'idNazione'=>1,
-        //     ]
-        // );
+
     }
 }

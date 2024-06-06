@@ -97,7 +97,7 @@ if (!defined('EPISODI_ID')){
 
 //*-------------------------------------------------- ACCESSO : TUTTI -------------------------------------------------
 //---------------------- REGISTRA -----------------------------------------------tested //TODO: RE-WORK
-Route::post(VERSIONE . '/registra', [RegistraController::class,'registra']);
+Route::post(VERSIONE .SALVA. '/registra', [RegistraController::class,'registra']);
 
 //----------------------ACCEDI----------------------------------------------------tested
 Route::get(VERSIONE . '/accedi/{username}/{email}/{hash?}',[AccediController::class, 'accedi']);

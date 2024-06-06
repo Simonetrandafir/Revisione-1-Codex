@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('crediti', function (Blueprint $table) {
             $table->id('idCredito');
             $table->unsignedBigInteger('idContatto')->index();
-            $table->unsignedInteger('credito')->default(10);
+            $table->unsignedInteger('credito')->default(100);
 
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('idContatto')->references('idContatto')->on('contatti');

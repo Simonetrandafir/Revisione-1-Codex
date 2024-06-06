@@ -6,6 +6,7 @@ use App\Helpers\AppHelpers;
 use App\Models\Contatti;
 use App\Models\ContattiRuoli;
 use App\Models\Crediti;
+use App\Models\Recapiti;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\ContattoStoreRequest;
@@ -115,37 +116,35 @@ class ContattiController extends Controller
         if (Gate::allows('eliminare')) {
             $contatto = $this->trovaIdDatabase($idContatto);
             $contatto->deleteOrFail();
-            $this->aggiornaIdTabella('contatti','idContatto','Contatti');
 
             $passwords = Password::where('idContatto',$idContatto);
             foreach ($passwords as $password){
                 $password->deleteOrFail();
-                $this->aggiornaIdTabella('passwords','idPassword','Password');
             }
 
             $auth = ContattiAuth::where('idContatto',$idContatto)->firstOrFail();
             $auth->deleteOrFail();
-            $this->aggiornaIdTabella('contatti_auths','idAuth','ContattiAuth');
 
             $indirizzi = Indirizzi::where('idContatto',$idContatto);
             foreach ($indirizzi as $indirizzo){
                 $indirizzo->deleteOrFail();
-                $this->aggiornaIdTabella('indirizzi','idIndirizzo','Indirizzi');
             }
 
             $sessioni = Sessioni::where('idContatto',$idContatto);
             foreach ($sessioni as $session) {
                 $session->deleteOrFail();
-                $this->aggiornaIdTabella('sessioni','idSessione','Sessioni');
             }
 
             $contattiRuoli = ContattiRuoli::where('idContatto',$idContatto)->firstOrFail();
             $contattiRuoli->deleteOrFail();
-            $this->aggiornaIdTabella('contatti_ruoli','id','ContattiRuoli');
 
             $crediti = Crediti::where('idContatto',$idContatto)->firstOrFail();
             $crediti->deleteOrFail();
-            $this->aggiornaIdTabella('crediti','idCredito','Crediti');
+
+            $recapiti= Recapiti::where('idContatto',$idContatto);
+            foreach ($recapiti as $recapito){
+                $recapito->deleteOrFail();
+            }
 
             return response()->noContent();
         } else {
@@ -162,7 +161,7 @@ class ContattiController extends Controller
      * @param string $id
      * @param string $model
      */
-    protected static function aggiornaIdDatabase ($tabella,$id,$model){
+    protected function aggiornaIdDatabase ($tabella,$id,$model){
         if($tabella!==null&&$id!==null){
             $maxId = $model::max($id);
             $statement = "ALTER TABLE $tabella AUTO_INCREMENT = $maxId";
@@ -183,7 +182,7 @@ class ContattiController extends Controller
      * @param string $id
      * @param string $model
      */
-    protected static function trovaIdDatabase($id){
+    protected function trovaIdDatabase($id){
         $risorsa = Contatti::findOrFail($id);
         if ($risorsa !== null){
             return $risorsa;

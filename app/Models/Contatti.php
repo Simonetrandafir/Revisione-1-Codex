@@ -13,7 +13,7 @@ class Contatti extends Authenticatable
 
     protected $table="contatti";
     protected $primaryKey="idContatto";
-    protected $with=['indirizzi','auth','abilita','ruoli','crediti'];
+    protected $with=['indirizzi','abilita','ruoli','crediti','recapiti'];
 
     protected $fillable=[
 
@@ -100,14 +100,18 @@ class Contatti extends Authenticatable
         return $this->belongsToMany(Abilita::class,'abilita_ruoli', 'idAbilita', 'idRuolo');
     }
     public function password(){
-        return $this->hasMany(Password::class, 'idContatto', 'idContatto')->orderBy('idContatto', 'ASC');
+        return $this->hasMany(Password::class, 'idContatto', 'idContatto')->orderBy('created_at', 'ASC');
     }
     public function auth(){
         return $this->hasOne(ContattiAuth::class,'idContatto', 'idContatto')->orderBy('idContatto', 'ASC');
     }
     public function indirizzi()
     {
-        return $this->hasMany(Indirizzi::class, "idContatto", "idContatto")->orderBy("preferito", "DESC");
+        return $this->hasMany(Indirizzi::class, "idContatto", "idContatto")->orderBy("preferito", "DESC")->orderBy("created_at", "ASC");
+    }
+    public function recapiti()
+    {
+        return $this->hasMany(Recapiti::class, "idContatto", "idContatto")->orderBy("created_at", "ASC");
     }
     public function crediti(){
         return $this->hasOne(Crediti::class, 'idContatto','idContatto');

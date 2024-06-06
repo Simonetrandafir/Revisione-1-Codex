@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Helpers\AppHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\RegistraRequest;
+use App\Http\Resources\v1\ContattiResource;
 use App\Models\ComuniItaliani;
 use App\Models\Contatti;
 use App\Models\ContattiAuth;
@@ -20,7 +21,7 @@ class RegistraController extends Controller
         if($data){
             $newContatto = RegistraController::aggiungiContatto($data);
             if($newContatto){
-                return response()->noContent();
+                return new ContattiResource($newContatto);
             }else{
                 abort(500,'Errore creazione contatto');
             }
@@ -32,11 +33,16 @@ class RegistraController extends Controller
     protected static function aggiungiContatto($data){
         $contatto = RegistraController::nuovoContatto($data);
         $auth = RegistraController::nuovoAuth($data,$contatto->idContatto);
-        RegistraController::nuovaPsw($data,$contatto->idContatto);
-        RegistraController::nuovoIndirizzo($data,$contatto->idContatto);
-        RegistraController::nuovoRuolo($contatto->idContatto, $auth->idAuth);
-        RegistraController::crediti($contatto->idContatto);
-        return $contatto;
+        $psw =RegistraController::nuovaPsw($data,$contatto->idContatto);
+        $indirizzo =RegistraController::nuovoIndirizzo($data,$contatto->idContatto);
+        $ruolo =RegistraController::nuovoRuolo($contatto->idContatto);
+        $credito =RegistraController::crediti($contatto->idContatto);
+        if($contatto&&$auth&&$psw&&$indirizzo&&$ruolo&&$credito){
+            return $contatto;
+
+        }else{
+            abort(500,'RC-AC');
+        }
     }
 
     protected static function nuovoContatto($data){
@@ -49,8 +55,8 @@ class RegistraController extends Controller
             'codFiscale'=>$data['codFiscale'],
             'cittadinanza'=>$data['cittadinanza'],
             'idNazione'=>$data['nazione'],
-            'cittaNascita'=>$comune->nome,
-            'provinciaNascita'=>$data['provinciaNascita'],
+            'citta'=>$comune->nome,
+            'provincia'=>$data['provincia'],
             'dataNascita'=>$data['dataNascita'],
         ]);
     }
@@ -80,7 +86,7 @@ class RegistraController extends Controller
         return Indirizzi::create([
             'idTipoIndirizzo'=>1,
             'idContatto'=>$idContatto,
-            'idNazione'=>$data['nazione'],
+            'idNazione'=>1,
             'idComuneItalia'=>$data['citta'],
             'preferito'=>$data['preferito'],
             'cap'=>$comune->cap,
@@ -91,15 +97,20 @@ class RegistraController extends Controller
     }
     
 
-    protected static function nuovoRuolo($idContatto,$idAuth){
-        Contatti::aggiungiUtenteRuolo($idContatto,2);
-        Contatti::sincronizzaContattoRuoli($idContatto,$idAuth);
+    protected static function nuovoRuolo($idContatto,){
+        $aggiungi=Contatti::aggiungiUtenteRuolo($idContatto,2);
+        $sincronizza=Contatti::sincronizzaContattoRuoli($idContatto,2);
+        if($aggiungi&&$sincronizza){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     protected static function crediti($idContatto){
         return Crediti::create([
             'idContatto'=> $idContatto,
-            'crediti'=> 100,
+            'crediti'=> 500,
         ]);
     }
 
