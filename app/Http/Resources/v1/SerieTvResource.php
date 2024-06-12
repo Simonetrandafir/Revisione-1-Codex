@@ -24,7 +24,9 @@ class SerieTvResource extends JsonResource
         return [
             'idSerieTv' => $this->idSerieTv,
             'idCategoria' => $this->idCategoria,
-            'idGenere' => $this->idGenere,
+            'categoria'=>$this->categoria,
+            'idGenere'=>$this->idGenere,
+            'genere'=>$this->genere,
             'titolo' => $this->titolo,
             'trama' => $this->trama,
             'totStagioni' => $this->totStagioni,
@@ -33,6 +35,7 @@ class SerieTvResource extends JsonResource
             'attori' => $this->attori,
             'annoInizio' => $this->annoInizio,
             'annoFine' => $this->annoFine,
+            'files'=>$this->files,
         ];
     }
 }

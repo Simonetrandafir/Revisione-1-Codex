@@ -31,8 +31,6 @@ class FilmStoreRequest extends FormRequest
             'regista'=> 'string|max:45',
             'attori'=> 'string|max:255',
             'visualizzato'=> 'string|max:1',
-            'idFile'=> 'integer',
-            'idVideo'=> 'integer',
         ];
     }
 }

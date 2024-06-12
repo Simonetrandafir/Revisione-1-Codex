@@ -22,14 +22,9 @@ return new class extends Migration
             $table->string('regista', 45)->index()->nullable();
             $table->string('attori', 255)->index()->nullable();
             $table->char('visualizzato', 1)->default(0);
-            $table->unsignedBigInteger('idFile')->nullable();
-            $table->unsignedBigInteger('idVideo')->nullable();
 
             $table->foreign('idCategoria')->references('idCategoria')->on('categorie');
             $table->foreign('idGenere')->references('idGenere')->on('genere');
-            $table->foreign('idFile')->references('idFile')->on('files');
-            $table->foreign('idVideo')->references('idFile')->on('files');
-
 
 
             $table->softDeletes();

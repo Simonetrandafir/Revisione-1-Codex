@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class ContattiAuth extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
 
     protected $table="contatti_auths";
     protected $primaryKey="idAuth";

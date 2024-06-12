@@ -30,8 +30,7 @@ class EpisodiStoreRequest extends FormRequest
             'durata'=>'required|integer',
             'anno'=>'required|integer',
             'visualizzato'=>'string|max:1',
-            'idFile'=>'integer',
-            'idVideo'=>'integer',
+
         ];
     }
 }

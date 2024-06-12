@@ -13,16 +13,21 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id('idFile');
-            $table->unsignedBigInteger('idRecord')->nullable();
-            $table->string('tabella',45)->nullable();
+            $table->unsignedBigInteger('record_id');
+            $table->unsignedBigInteger('record_tipo');
+            $table->enum('tipo',['cover','title_img','img','video','trailer']);
             $table->string('nome',255);
             $table->unsignedBigInteger('size');
             $table->string('posizione',255);
             $table->string('ext',6);
             $table->string('descrizione',45)->nullable();
-            $table->string('formato',45)->nullable();
+            $table->string('formato',45);
+
+
             $table->timestamps();
+
         });
+        
     }
 
     /**

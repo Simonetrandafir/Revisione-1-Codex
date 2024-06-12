@@ -13,7 +13,7 @@ class SerieTv extends Model
     protected $table = 'serie_tv';
     protected $primaryKey = 'idSerieTv';
 
-    protected $with=['files','videos'];
+    protected $with=['categoria','genere','episodi','files'];
 
     protected $fillable = [
         'idSerireTv',
@@ -28,17 +28,19 @@ class SerieTv extends Model
         'annoInizio',
         'annoFine',
         'visualizzato',
-        'idFile',
-        'idVideo',
     ];
 
-    public function files(){
-        return $this->hasMany(Files::class,'idFile', 'idFile');
-    }
-    public function videos(){
-        return $this->hasMany(Files::class,'idFile', 'idVideo');
+    public function categoria(){
+        return $this->hasOne(Categorie::class,'idCategoria','idCategoria');
     }
     public function genere(){
         return $this->belongsToMany(Genere::class,'idGenere', 'idGenere');
+    }
+    public function episodi(){
+        return $this->hasMany(Episodi::class);
+    }
+    public function files()
+    {
+        return $this->morphMany(Files::class, 'record');
     }
 }

@@ -23,12 +23,14 @@ class EpisodiResource extends JsonResource
         return [
             'idEpisodio' => $this->idEpisodio,
             'idSerieTv' => $this->idSerieTv,
+            'serieTv'=>$this->serieTv,
             'titolo' => $this->titolo,
             'trama' => $this->trama,
             'stagione' => $this->stagione,
             'episodio' => $this->episodio,
             'durata' => $this->durata,
             'anno' => $this->anno,
+            'files'=>$this->files
         ];
     }
 }

@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('altro_1', 45)->nullable();
             $table->string('altro_2', 45)->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('idTipoIndirizzo')->references('idTipoIndirizzo')->on('tipo_indirizzi');

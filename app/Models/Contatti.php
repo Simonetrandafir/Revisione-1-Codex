@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Contatti extends Authenticatable
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
 
     protected $table="contatti";
     protected $primaryKey="idContatto";

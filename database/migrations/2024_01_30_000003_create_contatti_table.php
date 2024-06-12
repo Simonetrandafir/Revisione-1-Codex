@@ -27,7 +27,6 @@ return new class extends Migration
             $table->date('dataNascita')->nullable();
 
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("idNazione")->references("idNazione")->on("nazioni");

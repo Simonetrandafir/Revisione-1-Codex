@@ -34,8 +34,6 @@ class SerieTvStoreRequest extends FormRequest
             'annoInizio'=>'required|integer',
             'annoFine'=>'integer',
             'visualizzato'=>'string|max:1',
-            'idFile'=>'integer',
-            'idVideo'=>'integer',
         ];
     }
 }

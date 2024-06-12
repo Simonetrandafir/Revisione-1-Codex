@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\v1\ComuniItalianiController;
 use App\Http\Controllers\Api\v1\ConfigurazioniController;
 use App\Http\Controllers\Api\v1\ContattiController;
 use App\Http\Controllers\Api\v1\CreditiController;
+use App\Http\Controllers\Api\v1\ElementiController;
 use App\Http\Controllers\Api\v1\EpisodiController;
 use App\Http\Controllers\Api\v1\FilesImgController;
 use App\Http\Controllers\Api\v1\FilmController;
@@ -143,13 +144,6 @@ Route::get(VERSIONE . '/province/{provincia}',[VistaProvinceController::class,'s
 
 //!---------------------------------------------------------------------------------------------------------------------
 
-//-------------------------- UPLOAD FILE IMG----------------------------------------------------------------------
-Route::post(VERSIONE.'/salva/upload',[FilesImgController::class,'store']);
-
-//TODO:--------------ALTRO---------------------------------------------- Fallita
-Route::get(VERSIONE . '/calcoloIva/{numero}',[CalcoloIva::class,'calcolaIva']);
-//!--------------------------------------------------------------------------------------------------------------
-
 //?#################################################################################################################
 
 //* ---------------------------------------- API ACCESSO : ADMIN, UTENTE -----------------------------------------------
@@ -173,6 +167,11 @@ Route::middleware(["autenticazione", "ruoli:admin,utente"])->group(function(){
     Route::get(VERSIONE . '/films/anno/{anno}', [FilmController::class,'indexAnno']);
     Route::get(VERSIONE . FILM_ID, [FilmController::class,'show']);
 
+    //----------------------------- TUTTI ------------------------------------tested
+    Route::get(VERSIONE . '/tutti',[ElementiController::class,'index']);    
+    Route::get(VERSIONE . '/tutti/genere/{idGenere}',[ElementiController::class,'indexGenere']);
+    Route::get(VERSIONE . '/tutti/anno/{annoUscita}',[ElementiController::class,'indexAnno']);
+
     // ------------------------- SERIE TV -------------------------------------tested
     Route::get(VERSIONE . '/serieTv', [SerieTvController::class,'index']);
     Route::get(VERSIONE . '/serieTv/genere/{idGenere}', [SerieTvController::class,'indexGenere']);
@@ -190,7 +189,7 @@ Route::middleware(["autenticazione", "ruoli:admin,utente"])->group(function(){
 
     // -------------------------- FILES ---------------------------------------------------------tested
     Route::get(VERSIONE .'/files/{idFile}',[FilesController::class,'show']);
-
+    
     //------------------------------- INDIRIZZI ----------------------------------------tested
     Route::get(VERSIONE .'/indirizzi/{idContatto}',[IndirizziController::class,'indexUtente']);
     Route::get(VERSIONE . '/indirizzi/{idContatto}/{idIndirizzo}',[IndirizziController::class,'show']);
@@ -286,9 +285,11 @@ Route::middleware(["autenticazione", "ruoli:admin"])->group(function(){
 
     // -------------------------- FILES ---------------------------------------------------------
     Route::get(VERSIONE .'/files',[FilesController::class,'index']);
-    // Route::post(VERSIONE . SALVA .'/files',[FilesController::class,'store']);
     Route::put(VERSIONE .AGGIORNA .'/files/{idFile}',[FilesController::class,'update']);
     Route::delete(VERSIONE.DISTRUGGI .'/files/{idFile}',[FilesController::class,'destroy']);
+    //-------------------------- UPLOAD FILE IMG----------------------------------------------------------------------
+    Route::post(VERSIONE.'/salva/upload/{idRecord}',[FilesImgController::class,'store']);
+
     //-------------------------- PASSWORDS ---------------------------------
     Route::get(VERSIONE . '/passwords',[PasswordController::class,'index']);
 });

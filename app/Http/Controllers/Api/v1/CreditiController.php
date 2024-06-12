@@ -73,7 +73,10 @@ class CreditiController extends Controller
             $data = $request->validated();
             $credito = Crediti::all()->where('idContatto',$idContatto)->firstOrFail();
             if (Gate::allows('admin')){
-                $credito->fill($data);
+                $valore=$credito->credito;
+                $newValore=$data['credito'];
+                $newCredito=$valore+$newValore;
+                $credito->credito = $newCredito;
                 $credito->save();
                 return new CreditiResource($credito);
             }else{
@@ -84,7 +87,10 @@ class CreditiController extends Controller
                     //controllo che l'idContatto corrisponda all'id nel token
                     $controllo = $this->controlloId($idContatto,$token);
                     if ($controllo === true){
-                        $credito->fill($data);
+                        $valore=$credito->credito;
+                        $newValore=$data['credito'];
+                        $newCredito=$valore+$newValore;
+                        $credito->credito = $newCredito;
                         $credito->save();
                     }else{
                         abort(403,'TK-CRC_0007');

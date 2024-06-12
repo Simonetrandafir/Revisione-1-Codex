@@ -186,7 +186,7 @@ class IndirizziController extends Controller
      * @param string $id
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Indirizzi::firstOrFail($id);
+        $risorsa = Indirizzi::where('idIndirizzo',$id)->findOrFail($id);
         if ($risorsa !== null){
             return $risorsa;
         }else{
@@ -205,6 +205,21 @@ class IndirizziController extends Controller
             }
         }else{
             abort(404, 'INCTK_0002');
+        }
+    }
+
+    protected static function aggiornaIdDatabase ($tabella,$id){
+        if($tabella!==null&&$id!==null){
+            $maxId = Indirizzi::max($id);
+            $statement = "ALTER TABLE $tabella AUTO_INCREMENT = $maxId";
+            $query = DB::statement($statement);
+            if ($query !== null){
+                return $query;
+            }else{
+                abort(404,'ATID_XXXX');
+            }
+        }else{
+            abort(404,'ATID-BASE');
         }
     }
 }

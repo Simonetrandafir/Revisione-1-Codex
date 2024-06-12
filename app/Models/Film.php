@@ -13,7 +13,7 @@ class Film extends Model
     protected $table = 'film';
     protected $primaryKey = 'idFilm';
 
-    protected $with=['files','videos'];
+    protected $with=['categoria','genere','files'];
     
     protected $fillable = [
         'idFilm',
@@ -26,17 +26,17 @@ class Film extends Model
         'regista',
         'attori',
         'visualizzato',
-        'idFile',
-        'idVideo'
 
     ];
-    public function files(){
-        return $this->hasMany(Files::class,'idFile', 'idFile');
-    }
-    public function videos(){
-        return $this->hasMany(Files::class,'idFile', 'idVideo');
+
+    public function categoria(){
+        return $this->hasOne(Categorie::class,'idCategoria','idCategoria');
     }
     public function genere(){
         return $this->belongsToMany(Genere::class,'idGenere', 'idGenere');
+    }
+    public function files()
+    {
+        return $this->morphMany(Files::class, 'record');
     }
 }

@@ -217,7 +217,7 @@ class RecapitiController extends Controller
      * @param string $model
      */
     protected static function trovaIdDatabase($id){
-        $risorsa = Recapiti::findOrFail($id);
+        $risorsa = Recapiti::where('idRecapito',$id)->findOrFail($id);
         if ($risorsa !== null){
             return $risorsa;
         }else{

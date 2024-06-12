@@ -14,8 +14,9 @@ class Files extends Model
     protected $primaryKey='idFile';
 
     protected $fillable = [
-        'idRecord',
-        'tabella',
+        'record_id',
+        'record_tipo',
+        'tipo',
         'nome',
         'size',
         'posizione',
@@ -24,23 +25,8 @@ class Files extends Model
         'formato',
 
     ];
-
-    public function filmFile(){
-        return $this->belongsTo(Film::class,'idFile','idRecord');
-    }
-    public function filmVideo(){
-        return $this->belongsTo(Film::class,'idVideo','idRecord');
-    }
-    public function serieFile(){
-        return $this->belongsTo(SerieTv::class,'idFile','idRecord');
-    }
-    public function serieVideo(){
-        return $this->belongsTo(SerieTv::class,'idVideo','idRecord');
-    }
-    public function episodiFile(){
-        return $this->belongsTo(Episodi::class,'idFile','idRecord');
-    }
-    public function episodiVideo(){
-        return $this->belongsTo(Episodi::class,'idVideo','idRecord');
+    public function filable()
+    {
+        return $this->morphTo();
     }
 }

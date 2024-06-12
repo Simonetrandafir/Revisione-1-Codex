@@ -13,7 +13,7 @@ class Episodi extends Model
     protected $table = 'episodi';
     protected $primaryKey = 'idEpisodio';
 
-    protected $with=['files','videos'];
+    protected $with=['serieTv','files'];
 
     protected $fillable = [
         'idEpisodio',
@@ -25,14 +25,16 @@ class Episodi extends Model
         'durata',
         'anno',
         'visualizzato',
-        'idFile',
-        'idVideo',
+
     ];
 
-    public function files(){
-        return $this->hasMany(Files::class,'idFile', 'idFile');
+    public function serieTv()
+    {
+        return $this->belongsTo(SerieTv::class, 'idSerieTv');
     }
-    public function videos(){
-        return $this->hasMany(Files::class,'idFile', 'idVideo');
+    public function files()
+    {
+        return $this->morphMany(Files::class, 'record');
     }
 }
+

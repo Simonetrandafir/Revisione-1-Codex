@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('psw',255);
             $table->string('sale',255)->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("idContatto")->references("idContatto")->on("contatti");

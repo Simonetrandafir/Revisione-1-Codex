@@ -19,8 +19,9 @@ class FilesResource extends JsonResource
     protected function getCampi(){
         return [
             'idFile'=>$this->idFile,
-            'idRecord'=>$this->idRecord,
-            'tabella'=>$this->tabella,
+            'record_id'=>$this->record_id,
+            'record_tipo'=>$this->record_tipo,
+            'tipo'=>$this->tipo,
             'nome'=>$this->nome,
             'size'=>$this->size,
             'posizione'=>$this->posizione,

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedInteger('inizioSfida')->default(0);
             $table->unsignedTinyInteger('obbligoCambio')->default(0);
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign("idContatto")->references("idContatto")->on("contatti");

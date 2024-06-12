@@ -23,13 +23,15 @@ class FilmController extends Controller
      */
     public function index()
     {
-        $film = null;
+        $film=null;
         if (Gate::allows('leggere')) {
+            $film = Film::where('visualizzato', 1)->get();
             if (Gate::allows('admin')) {
-                $film = Film::all();
+                if( request("tipo") ==='completo'){
+                    $film = Film::all();
+                }
                 return $this->creaCollection($film);
             } else {
-                $film = Film::where('visualizzato', 1)->get();
                 return new FilmCollection($film);
             }
         }  else {
@@ -37,12 +39,15 @@ class FilmController extends Controller
         }
     }
     public function indexGenere($idGenere){
+        $film=null;
         if (Gate::allows('leggere')) {
+            $film = Film::where('visualizzato', 1)->where('idGenere',$idGenere)->get();
             if (Gate::allows('admin')) {
-                $film = Film::where('idGenere',$idGenere)->get();
+                if( request("tipo") ==='completo'){
+                    $film = Film::where('idGenere',$idGenere)->get();
+                }
                 return $this->creaCollection($film);
             } else {
-                $film = Film::where('visualizzato', 1)->where('idGenere',$idGenere)->get();
                 return new FilmCollection($film);
             }
         }  else {
@@ -51,12 +56,15 @@ class FilmController extends Controller
     }
 
     public function indexRegista($regista){
+        $film=null;
         if (Gate::allows('leggere')) {
+            $film = Film::where('visualizzato', 1)->where('regista',$regista)->get();
             if (Gate::allows('admin')) {
-                $film = Film::where('regista',$regista)->get();
+                if( request("tipo") ==='completo'){
+                    $film = Film::where('regista',$regista)->get();
+                }
                 return $this->creaCollection($film);
             } else {
-                $film = Film::where('visualizzato', 1)->where('regista',$regista)->get();
                 return new FilmCollection($film);
             }
         }  else {
@@ -65,12 +73,15 @@ class FilmController extends Controller
     }
 
     public function indexAnno($anno){
+        $film=null;
         if (Gate::allows('leggere')) {
+            $film = Film::where('visualizzato', 1)->where('annoUscita',$anno)->get();
             if (Gate::allows('admin')) {
-                $film = Film::where('annoUscita',$anno)->get();
+                if( request("tipo") ==='completo'){
+                    $film = Film::where('annoUscita',$anno)->get();
+                }
                 return $this->creaCollection($film);
             } else {
-                $film = Film::where('visualizzato', 1)->where('annoUscita',$anno)->get();
                 return new FilmCollection($film);
             }
         }  else {
@@ -98,14 +109,17 @@ class FilmController extends Controller
      */
     public function show($idFilm)
     {
+        $film=null;
         if (Gate::allows('leggere')) {
-            if (Gate::allows('admin')) {
-                $film = $this->trovaIdDatabase($idFilm);
-                return $this->creaRisorsa($film);
-            } else{
-                $film = Film::where('idFilm', $idFilm)
+            $film = Film::where('idFilm', $idFilm)
                 ->where('visualizzato', 1)
                 ->firstOrFail();
+            if (Gate::allows('admin')) {
+                if( request("tipo") ==='completo'){
+                    $film = $this->trovaIdDatabase($idFilm);
+                }
+                return $this->creaRisorsa($film);
+            } else{
                 return new FilmResource($film);
             }
         } else {

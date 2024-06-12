@@ -23,13 +23,15 @@ class SerieTvController extends Controller
      */
     public function index()
     {
-        $serieTv = null;
+        $serieTv=null;
         if (Gate::allows('leggere')) {
+            $serieTv = SerieTv::where('visualizzato', 1)->get();
             if (Gate::allows('admin')) {
-                $serieTv = SerieTv::all();
+                if( request("tipo") ==='completo'){
+                    $serieTv = SerieTv::all();
+                }
                 return $this->creaCollection($serieTv);
             } else {
-                $serieTv = SerieTv::where('visualizzato', 1)->get();
                 return new SerieTvCollection($serieTv);
             }
         }  else {
@@ -38,12 +40,15 @@ class SerieTvController extends Controller
     }
 
     public function indexGenere($idGenere){
+        $serieTv=null;
         if (Gate::allows('leggere')) {
+            $serieTv = SerieTv::where('visualizzato', 1)->where('idGenere',$idGenere)->get();
             if (Gate::allows('admin')) {
-                $serieTv = SerieTv::where('idGenere',$idGenere)->get();
+                if( request("tipo") ==='completo'){
+                    $serieTv = SerieTv::where('idGenere',$idGenere)->get();
+                }
                 return $this->creaCollection($serieTv);
             } else {
-                $serieTv = SerieTv::where('visualizzato', 1)->where('idGenere',$idGenere)->get();
                 return new SerieTvCollection($serieTv);
             }
         }  else {
@@ -53,12 +58,14 @@ class SerieTvController extends Controller
 
     public function indexRegista($regista){
         if (Gate::allows('leggere')) {
+            $serieTv = SerieTv::where('visualizzato', 1)->where('regista',$regista)->get();
             if (Gate::allows('admin')) {
-                $film = SerieTv::where('regista',$regista)->get();
-                return $this->creaCollection($film);
+                if( request("tipo") ==='completo'){
+                    $serieTv = SerieTv::where('regista',$regista)->get();
+                }
+                return $this->creaCollection($serieTv);
             } else {
-                $film = SerieTv::where('visualizzato', 1)->where('regista',$regista)->get();
-                return new SerieTvCollection($film);
+                return new SerieTvCollection($serieTv);
             }
         }  else {
             abort(403, 'STV_0010');
@@ -66,12 +73,15 @@ class SerieTvController extends Controller
     }
 
     public function indexAnno($anno){
+        $serieTv=null;
         if (Gate::allows('leggere')) {
+            $serieTv = SerieTv::where('visualizzato', 1)->where('annoInizio',$anno)->get();
             if (Gate::allows('admin')) {
-                $serieTv = SerieTv::where('annoInizio',$anno)->get();
+                if( request("tipo") ==='completo'){
+                    $serieTv = SerieTv::where('annoInizio',$anno)->get();
+                }
                 return $this->creaCollection($serieTv);
             } else {
-                $serieTv = SerieTv::where('visualizzato', 1)->where('annoInizio',$anno)->get();
                 return new SerieTvCollection($serieTv);
             }
         }  else {
@@ -99,13 +109,15 @@ class SerieTvController extends Controller
     public function show(Request $request, $idSerieTv)
     {
         if (Gate::allows('leggere')) {
-            if (Gate::allows('admin')) {
-                $serieTv = $this->trovaIdDatabase($idSerieTv);
-                return $this->creaRisorsa($serieTv);
-            } else{
-                $serieTv = SerieTv::where('idSerieTv', $idSerieTv)
+            $serieTv = SerieTv::where('idSerieTv', $idSerieTv)
                 ->where('visualizzato', 1)
                 ->firstOrFail();
+            if (Gate::allows('admin')) {
+                if( request("tipo") ==='completo'){
+                    $serieTv = $this->trovaIdDatabase($idSerieTv);
+                }
+                return $this->creaRisorsa($serieTv);
+            } else{
                 return new SerieTvResource($serieTv);
             }
         } else {

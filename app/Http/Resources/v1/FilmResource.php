@@ -21,12 +21,17 @@ class FilmResource extends JsonResource
         protected function showGenere(){
             return[
                 'idFilm'=>$this->idFilm,
+                'idCategoria'=>$this->idCategoria,
+                'categoria'=>$this->categoria,
+                'idGenere'=>$this->idGenere,
+                'genere'=>$this->genere,
                 'titolo'=>$this->titolo,
                 'trama'=>$this->trama,
-                'durata'=>$this->durataMin,
-                'anno'=>$this->annoUscita,
+                'durataMin'=>$this->durataMin,
+                'annoUscita'=>$this->annoUscita,
                 'regista'=>$this->regista,
                 'attori'=>$this->attori,
+                'files'=>$this->files,
             ];
         }
 }
